@@ -4,13 +4,13 @@ import { useTable } from "react-table";
 
 import MOCK_DATA from "./MOCK_DATA.json";
 
-import { COLUMNS } from "./columns";
+import { COLUMNS, GROUPED_COLUMNS } from "./columns";
 
 import "./table.css";
 
 export const BasicTable = () => {
   // useMemo hook ensures that data is not re-created on every render => better component performance
-  const columns = useMemo(() => COLUMNS, []);
+  const columns = useMemo(() => GROUPED_COLUMNS, []);
   const data = useMemo(() => MOCK_DATA, []);
 
   //   destructuring properties and methods from the table instance => functions and arrays that the useTable hook from react table package has given to us to enable easy table creation
