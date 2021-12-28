@@ -8,11 +8,19 @@ import { COLUMNS } from "./columns";
 
 import "./table.css";
 import { GlobalFilter } from "./GlobalFilter";
+import { ColumnFilter } from "./ColumnFilter";
 
 export const FilteringTable = () => {
   // useMemo hook ensures that data is not re-created on every render => better component performance
   const columns = useMemo(() => COLUMNS, []);
   const data = useMemo(() => MOCK_DATA, []);
+
+  //   instead of specifying a filter property for every column on the table
+  const defaultColumn = useMemo(() => {
+    return {
+      Filter: ColumnFilter,
+    };
+  }, []);
 
   //   destructuring properties and methods from the table instance => functions and arrays that the useTable hook from react table package has given to us to enable easy table creation
   //   All of these need to be used with our html for our react table to work as intended
@@ -29,6 +37,7 @@ export const FilteringTable = () => {
     {
       columns,
       data,
+      defaultColumn,
     },
     useFilters,
     useGlobalFilter
