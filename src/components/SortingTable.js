@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 
-import { useTable } from "react-table";
+import { useTable, useSortBy } from "react-table";
 
 import MOCK_DATA from "./MOCK_DATA.json";
 
@@ -8,7 +8,10 @@ import { COLUMNS } from "./columns";
 
 import "./table.css";
 
-export const BasicTable = () => {
+// icons
+import { HiSortAscending, HiSortDescending } from "react-icons/hi";
+
+export const SortingTable = () => {
   // useMemo hook ensures that data is not re-created on every render => better component performance
   const columns = useMemo(() => COLUMNS, []);
   const data = useMemo(() => MOCK_DATA, []);
@@ -22,10 +25,13 @@ export const BasicTable = () => {
     footerGroups,
     rows,
     prepareRow,
-  } = useTable({
-    columns,
-    data,
-  });
+  } = useTable(
+    {
+      columns,
+      data,
+    },
+    useSortBy
+  );
   return (
     //   getTableProps needs to be destructured at the table tag:
     <table {...getTableProps()}>
@@ -33,7 +39,20 @@ export const BasicTable = () => {
         {headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map((column) => (
-              <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+              <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                {column.render("Header")}
+                <span>
+                  {column.isSorted ? (
+                    column.isSortedDesc ? (
+                      <HiSortDescending />
+                    ) : (
+                      <HiSortAscending />
+                    )
+                  ) : (
+                    ""
+                  )}
+                </span>
+              </th>
             ))}
           </tr>
         ))}

@@ -1,3 +1,5 @@
+
+
 // Mapping each column to a specific data value in the mock_data.json file => Helps react table identify which data data goes under which column in each row
 // We did not pick all the columns for the data file
 export const COLUMNS = [
